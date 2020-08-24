@@ -14,6 +14,10 @@
 ## See the License for the specific language governing permissions and
 ## limitations under the License.
 ## ---------------------------------------------------------------------------
+language: java
+
+dist: bionic
+
 addons:
   sonarcloud:
     organization: "apache"
@@ -23,16 +27,17 @@ addons:
 cache:
   directories:
   - "$HOME/.m2"
-language: java
-dist: bionic
 
 # SonarCloud give a warning if using shallow clone (default), so we disable it
 git:
   depth: false
   
 install: true
+
 jdk:
 - openjdk14
+
 script: ./scripts/test.sh
+
 after_success:
 - if [ "$TRAVIS_EVENT_TYPE" == "cron" ]; then bash -x scripts/deploy.sh ; fi
